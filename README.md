@@ -6,22 +6,6 @@ This directory contains an educational implementation of the XChaCha20 stream ci
 
 XChaCha20 is a modern stream cipher that extends ChaCha20 with a larger nonce size (192 bits vs 96 bits) for better flexibility. This implementation is for educational purposes only - for production use, always use established libraries like Libsodium.
 
-## Project Structure
-
-```
-symmetric/
-├── src/
-│   └── XChaCha20.php          # Main XChaCha20 implementation
-├── tests/
-│   └── XChaCha20Test.php      # Comprehensive unit tests
-├── composer.json              # Dependencies and autoloading
-├── phpunit.xml.dist          # PHPUnit configuration
-├── xchacha_stream_demo.php   # Demonstration script
-├── README.md                 # This file
-├── LICENSE                   # MIT License
-└── .gitignore               # Git ignore rules
-```
-
 ## Requirements
 
 - PHP 8.3 or higher
@@ -32,8 +16,8 @@ symmetric/
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
-   cd symmetric
+   git clone https://github.com/ericmann/xchacha20-demo.git 
+   cd xchacha20-demo
    ```
 
 2. **Install dependencies:**
@@ -95,7 +79,7 @@ composer test
 composer coverage
 ```
 
-*Note: Requires Xdebug to be enabled for coverage reporting.*
+*Note: Requires Xdebug or pcov to be enabled for coverage reporting.*
 
 ### Generate Code Coverage (HTML)
 
@@ -105,68 +89,37 @@ composer coverage-html
 
 Then open `html/index.html` in your browser.
 
-## How XChaCha20 Works
+## Disclaimer & Simplifications
 
-1. **HChaCha20 Subkey Derivation**: Uses the first 16 bytes of the nonce with the key to derive a subkey
-2. **ChaCha20 Keystream Generation**: Uses the subkey with the remaining 8 bytes of nonce to generate the keystream
-3. **XOR Encryption**: The keystream is XORed with the plaintext to produce ciphertext
+This code is an extraction and evolution from a series of articles on cryptography for PHP[Architect] magazine and is intended for **educational purposes only**.
 
-The algorithm operates on 32-bit words and uses 20 rounds of mixing operations to generate cryptographically secure pseudorandom bytes.
+**DO NOT USE THIS CODE IN PRODUCTION. IT IS NOT SECURE.**
 
-## Test Coverage
+### Project Goals
 
-The test suite includes comprehensive tests for:
+* Illustrate the core concepts of stream cipher operation using XChaCha20 as an example.
+* Demonstrate how pseudorandom keystreams are generated from a key and nonce.
+* Show how XOR operations enable encryption and decryption with the same operation.
+* Provide a tangible, albeit non-production-ready, codebase to accompany the PHP[Architect] articles.
+* Demonstrate compatibility with production libraries like Libsodium.
 
-- **Constructor validation** (key/nonce size validation)
-- **Keystream generation** (deterministic behavior, length accuracy)
-- **Encryption/decryption** (round-trip functionality)
-- **Security properties** (nonce reuse vulnerability demonstration)
-- **Cross-compatibility** with Libsodium (when available)
-- **Edge cases** (empty strings, binary data, large messages)
-- **Block boundaries** (testing at 64-byte block boundaries)
+### Features Demonstrated
 
-## Security Notes
+* **Stream Cipher Basics**: How XChaCha20 generates deterministic pseudorandom keystreams.
+* **XOR Encryption**: Simple bitwise operations for encryption and decryption.
+* **Nonce Management**: The importance of unique nonces for security.
+* **Cross-Library Compatibility**: Verification against Libsodium's implementation.
+* **Educational Documentation**: Comprehensive comments explaining cryptographic concepts.
 
-- **Nonce Reuse**: Never reuse a nonce with the same key - this completely breaks the security
-- **Key Management**: Keep keys secure and use cryptographically secure random number generation
-- **Production Use**: This implementation is for education only. Use Libsodium or other established libraries for production
+### Key Simplifications for Educational Purposes
 
-## Educational Value
+* **No Authenticated Encryption**: This implementation provides only confidentiality, not authenticity. Real-world applications require AEAD constructions like XChaCha20-Poly1305.
+* **Basic Error Handling**: Simplified validation focused on educational clarity rather than production robustness.
+* **Educational Comments**: Extensive inline documentation that would be excessive in production code.
+* **Deterministic Test Values**: Uses predictable test data for reproducible demonstrations.
+* **No Performance Optimizations**: Prioritizes readability over speed.
 
-This implementation demonstrates:
-- How stream ciphers work at a fundamental level
-- The importance of nonces in symmetric cryptography
-- How XOR operations enable encryption and decryption
-- The structure of modern cryptographic algorithms
-- Proper testing practices for cryptographic code
+This project aims to make the _flow_ and _mathematical components_ of XChaCha20 tangible. It is **NOT a secure implementation** and should not be used as a basis for production systems.
 
-## Development
+Refer to the original PHP[Architect] magazine articles and the "Further Reading" sections within them for more details on secure, production-grade cryptographic protocols and implementations.
 
-### Project Structure
-
-The project follows PSR-4 autoloading standards:
-- `XChaChaDemo\` namespace maps to `src/` directory
-- `XChaChaDemo\Tests\` namespace maps to `tests/` directory
-
-### Adding Tests
-
-To add new tests:
-1. Create a new test file in the `tests/` directory
-2. Use the `XChaChaDemo\Tests` namespace
-3. Extend `PHPUnit\Framework\TestCase`
-4. Follow the existing test patterns
-
-### Code Quality
-
-The project includes:
-- Comprehensive PHPDoc comments
-- PSR-12 coding standards
-- Extensive unit test coverage
-- Educational inline comments explaining cryptographic concepts
-
-## References
-
-- [XChaCha20 Specification](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-xchacha)
-- [ChaCha20 and Poly1305 RFC 8439](https://datatracker.ietf.org/doc/html/rfc8439)
-- [Libsodium Documentation](https://doc.libsodium.org/)
-- [PHPUnit Documentation](https://phpunit.de/) 
