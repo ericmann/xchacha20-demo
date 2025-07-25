@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         stopOnRisky="false"
+         stopOnWarning="false"
+         failOnWarning="false"
+         failOnRisky="false"
+         failOnEmptyTestSuite="false"
+         failOnIncomplete="false"
+         failOnSkipped="false"
+         reverseDefectList="false"
+         registerMockObjectsFromTestArgumentsRecursively="false">
+    <testsuites>
+        <testsuite name="XChaCha20 Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <coverage>
+        <report>
+            <html outputDirectory="html"/>
+            <text outputFile="coverage.txt"/>
+        </report>
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+    </php>
+</phpunit> 
